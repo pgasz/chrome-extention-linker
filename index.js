@@ -1,97 +1,129 @@
-const inputEl = document.querySelector('#input-el')
-const inputBtn = document.querySelector('#input-btn')
-const ulEl = document.querySelector('#ul-el')
-const deleteBtn = document.querySelector('#delete-btn')
-const tabBtn = document.querySelector('#tab-btn')
+const inputEl = document.querySelector('#input-el');
+const inputBtn = document.querySelector('#input-btn');
+const ulEl = document.querySelector('#ul-el');
+const deleteBtn = document.querySelector('#delete-btn');
+const tabBtn = document.querySelector('#tab-btn');
+const copyBtn = document.querySelector('#copy-btn');
 
-// let myLinks = ["https://www.youtube.com/", 'https://flaviocopes.com/', 'https://scrimba.com/']
+function startLinks(array) {
+    array.forEach((element, index) => {
+        createElement(element, index);
+    });
+}
 
-// localStorage.setItem('myLeads', JSON.stringify(myLinks))
+function createElement(el) {
+    const aEl = document.createElement('a');
+    aEl.setAttribute('href', el);
+    aEl.setAttribute('target', '_blank');
+    aEl.textContent = el;
+    const liEl = document.createElement('li');
+    const deleteIcon = document.createElement('i');
+    deleteIcon.classList.add('fa-close');
+    deleteIcon.classList.add('fa');
+    deleteIcon.addEventListener('click', (e) => {
+        deleteElement(e.target.parentElement);
+    });
+    liEl.appendChild(aEl);
+    liEl.appendChild(deleteIcon);
+    ulEl.appendChild(liEl);
+}
 
+function deleteElement(element) {
+    deleteFromLocalStorage(element.textContent);
+    element.remove();
+}
 
-const leadsFromLocalStorage = JSON.parse(localStorage.getItem('myLeads'))
-console.log(leadsFromLocalStorage)
+function addToLocalStorage(sth, key) {
+    const myLinks = JSON.parse(localStorage.getItem(key));
+    if (!myLinks) {
+        localStorage.setItem('myLinks', JSON.stringify([]));
+    }
+    if (!myLinks.includes(sth)) {
+        myLinks.push(sth);
+    }
+    localStorage.setItem(key, JSON.stringify(myLinks));
+}
 
-// addToLocalStorage("https://stackoverflow.com/", "myLeads")
-let myLinks = []
-if(leadsFromLocalStorage){
-    myLinks = leadsFromLocalStorage
-    startLinks(myLinks)
+function deleteFromLocalStorage(value) {
+    const myLinks = JSON.parse(localStorage.getItem('myLinks'));
+    myLinks.splice(myLinks.indexOf(value), 1);
+    localStorage.setItem('myLinks', JSON.stringify(myLinks));
+}
 
-}else(
-    localStorage.setItem('myLeads', JSON.stringify([]))
-)
-console.log(myLinks)
+function saveToClipboard(elementId) {
+    const myLinks = JSON.parse(localStorage.getItem('myLinks'));
+    const copyString = myLinks.reduce((result, e) => {
+        return `${result}\n${e}`;
+    }, '');
+    navigator.clipboard.writeText(copyString);
+}
 
-tabBtn.addEventListener('click', ()=>{
-    // const windowUrl = window.location.href//dobrze ale my bierzemy url z innego okna deFacto
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
-        const windowUrl = tabs[0].url
-        if(myLinks.includes(windowUrl) === false){
-            addToLocalStorage(windowUrl, "myLeads")
-            createElement(windowUrl)
-            myLinks.push(windowUrl)
+function saveInput(inputValue) {
+    if (inputValue && myLinks.includes(inputValue) === false) {
+        myLinks.push(inputValue);
+        addToLocalStorage(inputValue, 'myLinks');
+        createElement(inputValue);
+    }
+    inputEl.value = '';
+}
+
+function deleteAll() {
+    localStorage.setItem('myLinks', JSON.stringify([]));
+    myLinks = [];
+    ulEl.innerHTML = '';
+}
+
+function saveTab() {
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        const windowUrl = tabs[0].url;
+        if (!myLinks.includes(windowUrl)) {
+            addToLocalStorage(windowUrl, 'myLinks');
+            createElement(windowUrl);
+            myLinks.push(windowUrl);
         }
-    })
-    
-    // console.log(windowUrl)
-    // if(myLinks.includes(windowUrl) === false){
-    //     addToLocalStorage(windowUrl, "myLeads")
-    //     createElement(windowUrl)
-    //     myLinks.push(windowUrl)
-    // }
-    
-})
-
-deleteBtn.addEventListener("dblclick", ()=>{
-    localStorage.clear()
-    myLinks = []
-    ulEl.innerHTML = ''
-})
-
-inputBtn.addEventListener("click", (e)=>{
-    const inputValue = inputEl.value
-    if(inputValue && myLinks.includes(inputValue) === false){
-        console.log('tutaj w listenerze inlutBtn')
-        myLinks.push(inputValue)
-        addToLocalStorage(inputValue, "myLeads")
-        createElement(inputValue)
-    }
-    inputEl.value = ''
-
-})
-function startLinks(array){
-    array.forEach((element) => {
-    // JSON.parse(localStorage.getItem('myLeads')).forEach((element) => {
-    // myLinks.forEach((element) => {
-        createElement(element)
-    })
+    });
 }
 
-function createElement(el){
-    let aEl = document.createElement('a')
-    aEl.setAttribute('href', el)
-    aEl.setAttribute('target', '_blank')
-    // console.log(aEl)
-    let liEl = document.createElement('li')
-    liEl.textContent = el
-    aEl.appendChild(liEl)
-    ulEl.appendChild(aEl)
+function enterSaveInput(event) {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        saveInput(inputEl.value);
+    }
 }
 
+tabBtn.addEventListener('click', () => {
+    saveTab();
+});
 
-function addToLocalStorage(sth, key){
-    if(JSON.parse(localStorage.getItem(key))){
-    }else(
-        localStorage.setItem('myLeads', JSON.stringify([]))
-    )
-    let array = Object.values(JSON.parse(localStorage.getItem(key)))
-    if(array.includes(sth) === false){
-        array.push(sth)
-    }
-    // console.log(array)
-    localStorage.setItem(key, JSON.stringify(array))
-    // console.log(JSON.parse(localStorage.getItem(key)))
+deleteBtn.addEventListener('dblclick', () => {
+    deleteAll();
+});
 
+inputBtn.addEventListener('click', () => {
+    saveInput(inputEl.value);
+});
 
+inputEl.addEventListener('keyup', (e) => {
+    enterSaveInput(e);
+});
+
+var timer = null;
+copyBtn.addEventListener('click', (event) => {
+    saveToClipboard(event.target.id);
+    const el = event.target;
+    console.log(event.target);
+    el.classList.add('active');
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+        el.classList.remove('active');
+    }, 1500);
+});
+
+let myLinks = [];
+const leadsFromLocalStorage = JSON.parse(localStorage.getItem('myLinks'));
+if (leadsFromLocalStorage) {
+    myLinks = leadsFromLocalStorage;
+    startLinks(myLinks);
+} else {
+    localStorage.setItem('myLinks', JSON.stringify(myLinks));
 }

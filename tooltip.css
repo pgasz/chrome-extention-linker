@@ -1,0 +1,52 @@
+[data-tooltip] {
+    position: relative;
+    cursor: pointer;
+}
+[data-tooltip]:before,
+[data-tooltip]:after {
+    line-height: 1;
+    font-size: 0.9em;
+    pointer-events: none;
+    position: absolute;
+    box-sizing: border-box;
+    display: none;
+    opacity: 0;
+}
+[data-tooltip]:before {
+    content: '';
+    border: 5px solid transparent;
+    z-index: 100;
+}
+[data-tooltip]:after {
+    content: attr(data-tooltip);
+    text-align: center;
+    min-width: 3em;
+    max-width: 21em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 6px 8px;
+    border-radius: 6px;
+    background: #5f9341;
+    color: #ffffff;
+    z-index: 99;
+}
+[data-tooltip].active:before,
+[data-tooltip].active:after {
+    display: block;
+    opacity: 1;
+}
+[data-tooltip]::before {
+    top: 100%;
+    border-top-width: 0;
+    border-bottom-color: #5f9341;
+}
+[data-tooltip]::after {
+    top: calc(100% + 5px);
+}
+[data-tooltip]::before,
+[data-tooltip]::after {
+    left: 50%;
+    -webkit-transform: translate(-50%, 8px);
+    transform: translate(-50%, 8px);
+}
