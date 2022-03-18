@@ -20,4 +20,4 @@ This is small custom Chrome Browser Extention with simple layout. It is made for
 - HTML
 
 ### Authors
-[Gasz Paweł - pgasz] (https://github.com/pgasz "Gasz Paweł - pgasz")
+- [pgasz](https://github.com/pgasz "pgasz")
