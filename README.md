@@ -3,13 +3,13 @@ This is a small custom Chrome Browser Extention with a simple layout. It enables
 
 ## Features
 - storing links while switching browser tags
-- saving typed phrases inside input field [pressing "Enter" or clicking "SAVE INPUT" button]
+- saving typed phrases inside an input field [pressing "Enter" or clicking "SAVE INPUT" button]
 - preventing repeats (you can add only unique value)
-- saving the URL of active browser tag [clicking the "SAVE TAB" button]
+- saving the URL of an active browser tab [clicking the "SAVE TAB" button]
 - deleting all of the stored links [double clicking the "DELETE ALL" button]
-- opening each stored link in a new browser tag [clicking the link]
+- opening each stored link in a new browser tab [clicking the link]
 - removing each link separately [clicking red "x" next to the link]
-- copying the list of the stored links in clipboard [clicking the "COPY" button]
+- copying the list of the stored links in a clipboard [clicking the "COPY" button]
 
 ## Overview
 ...
