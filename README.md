@@ -1,5 +1,5 @@
 # Linker
-This is small custom Chrome Browser Extention with simple layout. It is made for storing links at hand while doing research. I implemented solutions that I found helpful in searching for information on the Internet and sharing them with others.
+This is a small custom Chrome Browser Extention with a simple layout. It enables you to store links at hand while doing research. I implemented solutions which are helpful in searching for information on the Internet and sharing it with others.
 
 ## Features
 - storing links while switching browser tags
@@ -7,9 +7,9 @@ This is small custom Chrome Browser Extention with simple layout. It is made for
 - preventing repeats (you can add only unique value)
 - saving the URL of active browser tag [clicking the "SAVE TAB" button]
 - deleting all of the stored links [double clicking the "DELETE ALL" button]
-- opening each stored link in new browser tag [clicking the link]
-- remove each link separately [clicking red "x" next to the link]
-- coping list of the stored links in clipboard [clicking the "COPY" button]
+- opening each stored link in a new browser tag [clicking the link]
+- removing each link separately [clicking red "x" next to the link]
+- copying the list of the stored links in clipboard [clicking the "COPY" button]
 
 ## Overview
 ...
