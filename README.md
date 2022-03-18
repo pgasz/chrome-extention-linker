@@ -2,7 +2,7 @@
 This is a small custom Chrome Browser Extention with a simple layout. It enables you to store links at hand while doing research. I implemented solutions which are helpful in searching for information on the Internet and sharing it with others.
 
 ## Features
-- storing links while switching browser tags
+- storing links while switching browser tabs
 - saving typed phrases inside an input field [pressing "Enter" or clicking "SAVE INPUT" button]
 - preventing repeats (you can add only unique value)
 - saving the URL of an active browser tab [clicking the "SAVE TAB" button]
