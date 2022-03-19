@@ -5,7 +5,9 @@ body {
     min-width: 400px;
     width: 400px;
     --main-color: #5f9341;
+    --x-icon-size: 0.05rem;
 }
+
 
 .grid {
     display: grid;
@@ -49,14 +51,14 @@ ul#ul-el {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    color: var(--main-color);
-    padding: 0rem 0.5rem 0.2rem 0.5rem;
+    padding: 0.5rem;
     marker: inherit;
     position: relative;
     border-bottom: 1px dotted var(--main-color);
 }
 
 #ul-el li a {
+    color: var(--main-color);
     text-decoration: underline;
     flex: 1;
     transform: scale(0.98);
@@ -78,16 +80,20 @@ ul#ul-el {
 
 #ul-el li i {
     padding: 0.5rem 0.5rem 0.5rem 2rem;
-    font-size: 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: red;
-    transform: scale(0.9);
+    transform: scale(0.8);
     transition: transform 0.2s ease;
 }
 
 #ul-el li i:hover {
     cursor: pointer;
     transform: scale(1);
+}
+
+.red-x {
+    background-image: url('./close-red.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: var(--x-icon-size);
+    width: var(--x-icon-size);
 }

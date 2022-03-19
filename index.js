@@ -18,8 +18,7 @@ function createElement(el) {
     aEl.textContent = el;
     const liEl = document.createElement('li');
     const deleteIcon = document.createElement('i');
-    deleteIcon.classList.add('fa-close');
-    deleteIcon.classList.add('fa');
+    deleteIcon.classList.add('red-x');
     deleteIcon.addEventListener('click', (e) => {
         deleteElement(e.target.parentElement);
     });
